@@ -48,138 +48,81 @@ risk-adjusted performance metrics.
     └── theory/
         └── ml_alpha_copula_theory.md
 
-------------------------------------------------------------------------
-
 ## Completed Core Modules
 
-### 1. Theory
+### 1) Theory
+- ML Alpha + Copula Beta theoretical framework
+- Mathematical models and derivations
+- Methodology comparisons
 
--   ML Alpha + Copula Beta theoretical framework
--   Mathematical models and derivations
--   Methodology comparisons
+### 2) Alpha (Machine Learning)
+- Financial feature engineering (`feature_engineering.py`)
+- Technical indicators: RSI, MACD, Bollinger Bands
+- Momentum & reversal factors
+- Volatility features (e.g., historical, GARCH-style)
+- Cross-sectional features (relative strength, rankings)
 
-### 2. Alpha (Machine Learning)
+### 3) Beta (Statistics)
+- Copula–CVaR Beta estimation framework
+- Multiple copula families
+- Tail dependence modeling
 
--   Financial feature engineering (`feature_engineering.py`)
--   Technical indicators: RSI, MACD, Bollinger Bands
--   Momentum and reversal factors
--   Volatility features: historical vol, GARCH vol
--   Cross-sectional features: relative strength, rankings
+### 4) Portfolio Optimization
+- Integration of ML Alpha + Copula Beta
+- Risk constraints & transaction costs
+- Adaptive / regime-aware parameter updates
 
-### 3. Beta (Statistics)
+### 5) Evaluation
+- Multi-dimensional performance metrics
+- Benchmark comparisons
+- Visualization & reporting
 
--   Copula-CVaR Beta estimation framework
--   Multiple copula families supported
--   Tail dependence modeling
-
-### 4. Portfolio Optimization
-
--   Integration of ML Alpha + Copula Beta
--   Risk constraints and transaction costs
--   Adaptive parameter adjustments
-
-### 5. Evaluation
-
--   Multi-dimensional performance metrics
--   Benchmark comparisons
--   Visualization and reporting
-
-------------------------------------------------------------------------
+---
 
 ## Key Advantages
 
-### Theory-driven
-
--   Built on modern portfolio theory
--   Combines ML with statistical risk modeling
--   Alpha-Beta decoupled design
+### Theory-Driven
+- Grounded in modern portfolio theory
+- Decoupled design: ML for Alpha; copula/statistics for Beta
 
 ### Modular Architecture
-
--   Clear separation of responsibilities
--   Easy to maintain and extend
--   Independent testing and debugging
+- Clear separation of concerns
+- Easy to extend, test, and debug
 
 ### Technical Innovations
-
--   Machine learning for Alpha extraction
--   Copula theory for Beta estimation
--   Multi-dimensional feature engineering
+- ML for signal extraction (Alpha)
+- Copula theory for dependence & tail risk (Beta)
+- Rich, multi-scale feature engineering
 
 ### Comprehensive Evaluation
+- Strong baselines included
+- Risk-adjusted return metrics
+- Performance attribution & plots
 
--   Benchmark strategies included
--   Risk-adjusted return metrics
--   Performance attribution
-
-------------------------------------------------------------------------
+---
 
 ## Usage
 
 ### Quick Start
 
-``` bash
-cd ~/Downloads/Portfolio_Optimization_system
+```bash
+# Clone the repo
+git clone https://github.com/kevinlmf/Portfolio_Optimization.git
+# (SSH) git clone git@github.com:kevinlmf/Portfolio_Optimization.git
 
-# install dependencies
+cd Portfolio_Optimization
+
+# Create & activate a virtual environment (recommended)
+python3 -m venv .venv
+source .venv/bin/activate        # Windows (PowerShell): .\.venv\Scripts\Activate.ps1
+                                 # Windows (CMD):        .venv\Scripts\activate.bat
+
+# Install dependencies
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 
-# run demo
+# Run the demo
 python complete_portfolio_example.py
-```
+# If the example is in a subfolder:
+# python examples/complete_portfolio_example.py
 
-### Main Functions
-
-1.  Data Loading --- automatically fetch stock & market data\
-2.  Feature Engineering --- generate 80+ financial features\
-3.  Alpha Extraction --- ML-based return prediction\
-4.  Beta Estimation --- Copula-based risk modeling\
-5.  Portfolio Optimization --- dynamic weight allocation\
-6.  Performance Evaluation --- compare vs benchmarks
-
-------------------------------------------------------------------------
-
-## Expected Results
-
-### Strategies Compared
-
--   ML Alpha + Copula Beta (proposed)
--   Equal-Weight Portfolio
--   Minimum Variance Portfolio
--   Momentum Strategy
--   Market Index (passive benchmark)
-
-### Evaluation Metrics
-
--   Sharpe Ratio
--   Maximum Drawdown
--   Information Ratio
--   Win Rate
--   Risk-adjusted Return
-
-------------------------------------------------------------------------
-
-## Core Innovations
-
-1.  Alpha-Beta Separation --- independent return and risk modeling
-2.  Multi-Scale Modeling --- short-term Alpha, long-term Beta
-3.  Confidence-Weighted Signals --- adjust by prediction confidence
-4.  Tail Risk Management --- copula dependence for extremes
-5.  Adaptive Optimization --- regime-aware parameter tuning
-
-------------------------------------------------------------------------
-
-## Theory Reference
-
-See `theory/ml_alpha_copula_theory.md` for detailed formulas and
-derivations.
-
-------------------------------------------------------------------------
-
-## Future Extensions
-
-1.  More ML models: LSTM, Transformer, GNN
-2.  Higher frequency data (minute, second-level)
-3.  Alternative data: news sentiment, social media
-4.  Reinforcement Learning for dynamic optimization
-5.  Real-time trading system integration
