@@ -1,4 +1,4 @@
-# 🚀 Advanced Portfolio Optimization System
+#  Advanced Portfolio Optimization System
 
 > **A comprehensive, production-ready portfolio optimization system powered by machine learning alpha factors, advanced beta risk modeling, and intelligent portfolio construction.**
 
@@ -6,27 +6,27 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Production--Ready-success.svg)]()
 
-## ✨ Overview
+##  Overview
 
 This system represents a complete end-to-end solution for quantitative portfolio management, integrating sophisticated factor research, risk modeling, and portfolio optimization techniques used by professional asset managers.
 
-### 🎯 Key Features
+###  Key Features
 
-- **🧠 Intelligent Alpha Mining**: Automatically discovers and validates 100+ alpha factors across multiple categories
-- **⚖️ Advanced Risk Modeling**: 5+ beta estimation methods including Copula models and CVaR approaches  
-- **🎛️ Multi-Objective Optimization**: Sharpe maximization, minimum variance, risk parity, and utility optimization
-- **📊 Comprehensive Backtesting**: Rolling window optimization with performance analytics
-- **🔄 Production-Ready Architecture**: Modular, scalable design suitable for institutional use
-- **📈 Real-Time Monitoring**: Factor validation and portfolio rebalancing capabilities
+- **Intelligent Alpha Mining**: Automatically discovers and validates 100+ alpha factors across multiple categories
+- **Advanced Risk Modeling**: 5+ beta estimation methods including Copula models and CVaR approaches  
+- **Multi-Objective Optimization**: Sharpe maximization, minimum variance, risk parity, and utility optimization
+- **Comprehensive Backtesting**: Rolling window optimization with performance analytics
+- **Production-Ready Architecture**: Modular, scalable design suitable for institutional use
+- **Real-Time Monitoring**: Factor validation and portfolio rebalancing capabilities
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 Portfolio_Optimization_System/
-├── 📊 data/                          # Data acquisition and processing
+├──  data/                          # Data acquisition and processing
 │   ├── enhanced_data_fetcher.py      # Multi-source market data fetcher
 │   └── real_data.py                  # Real-time data integration
-├── 🧠 strategy/                      # Core strategy engine
+├── strategy/                      # Core strategy engine
 │   ├── factor/                       # Factor research framework
 │   │   ├── alpha/                    # Alpha factor mining
 │   │   │   ├── technical_alpha_factors.py      # 40+ technical indicators
@@ -44,23 +44,23 @@ Portfolio_Optimization_System/
 │   │       ├── beta_evaluator.py              # Risk model validation
 │   │       └── real_beta_estimator.py         # Production risk estimation
 │   └── alpha_beta_optimizer.py       # Portfolio optimization engine
-├── 🛡️ risk_control/                  # Risk management framework
+├──  risk_control/                  # Risk management framework
 │   └── factor_validation.py          # Factor validation and monitoring
 ├── ⚡ execution_engine/               # Portfolio execution
 │   └── portfolio_optimization_env.py # Trading environment integration
-├── 📜 scripts/                       # Main execution scripts
-│   ├── smart_portfolio_optimizer.py  # 🎯 PRIMARY ENTRY POINT
+├──  scripts/                       # Main execution scripts
+│   ├── smart_portfolio_optimizer.py  #  PRIMARY ENTRY POINT
 │   └── start_here.py                 # Alternative comprehensive interface
-└── 📁 results/                       # Output and analytics
+└──  results/                       # Output and analytics
 ```
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/kevinlmf/Portfolio_Optimization
 cd Portfolio_Optimization_System
 
 # Create virtual environment
@@ -71,7 +71,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 🎯 Option 1: Smart Portfolio Optimizer (Recommended)
+###  Option 1: Smart Portfolio Optimizer (Recommended)
 
 The **primary entry point** - a complete, production-ready optimization system:
 
@@ -87,7 +87,7 @@ This will automatically:
 5. **Run comprehensive backtests** with monthly rebalancing
 6. **Generate detailed reports** with visualizations
 
-### 🔧 Option 2: Custom Analysis
+###  Option 2: Custom Analysis
 
 For advanced users who want full control:
 
@@ -102,7 +102,7 @@ python scripts/start_here.py --mode full --tickers AAPL,MSFT,GOOGL,AMZN --save
 - `live`: Real-time trading setup (demo)
 - `health`: System health check
 
-## 🧮 Core Capabilities
+## Core Capabilities
 
 ### Alpha Factor Mining
 
@@ -139,7 +139,7 @@ Our system discovers alpha signals across **6 major categories**:
 - **Maximum Utility**: Customizable risk aversion
 - **Factor Neutral**: Style-neutral exposure
 
-## 📊 Sample Results
+##  Sample Results
 
 Based on historical analysis (2020-2024):
 
@@ -152,7 +152,7 @@ Based on historical analysis (2020-2024):
 | **Win Rate** | 61.4% | 55.2% |
 | **Information Ratio** | 0.51 | - |
 
-## 🔧 Advanced Usage
+##  Advanced Usage
 
 ### Custom Factor Development
 
@@ -190,7 +190,7 @@ optimizer.backtest_strategy(rebalance_frequency='monthly')
 report = optimizer.generate_report(save_plots=True)
 ```
 
-## 📈 Validation & Risk Management
+## Validation & Risk Management
 
 ### Factor Validation Pipeline
 
@@ -209,7 +209,7 @@ report = optimizer.generate_report(save_plots=True)
 - **Drawdown** monitoring
 - **Stress testing** across market regimes
 
-## 🔍 System Monitoring
+## System Monitoring
 
 The system provides comprehensive monitoring:
 
@@ -227,7 +227,7 @@ python scripts/start_here.py --mode quick --tickers SPY,QQQ
 - ✅ Factor validation
 - ✅ Risk model stability
 
-## 📁 Output Files
+## Output Files
 
 All results are saved to `results/` directory:
 
@@ -244,7 +244,7 @@ results/
 └── analysis_report_YYYYMMDD.md     # Detailed methodology
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 ### Key Parameters
 
@@ -270,7 +270,7 @@ balanced_portfolio = ['AAPL', 'JPM', 'JNJ', 'PG', 'XOM', 'CAT', 'WMT', 'V']
 defensive_mix = ['SPY', 'TLT', 'GLD', 'VIX', 'UUP']  # Stocks, bonds, gold, volatility
 ```
 
-## 🧪 Testing
+## Testing
 
 Run the test suite:
 
@@ -285,4 +285,8 @@ print('✅ System initialized successfully')
 # Full integration test with sample data
 python scripts/smart_portfolio_optimizer.py
 ```
+
+
+
+
 
