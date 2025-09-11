@@ -1,0 +1,75 @@
+================================================================================
+SMART PORTFOLIO OPTIMIZER - COMPREHENSIVE REPORT
+================================================================================
+Generated on: 2025-09-11 13:41:40
+Analysis Period: 2020-01-01 to 2024-01-01
+
+DATA SUMMARY
+----------------------------------------
+Total Observations: 27,162
+Number of Assets: 27
+Date Range: 2020-01-02 00:00:00-05:00 to 2023-12-29 00:00:00-05:00
+
+ALPHA FACTORS SUMMARY
+----------------------------------------
+Total Factors Generated: 13
+Selected Top Factors: 13
+
+Top 10 Alpha Factors:
+   1. ml_xgb_pred_1d
+   2. ml_rf_pred_1d
+   3. ml_ridge_pred_1d
+   4. ml_xgb_pred_10d
+   5. ml_rf_pred_10d
+   6. ml_ridge_pred_10d
+   7. volume_impact
+   8. ml_rf_pred_5d
+   9. ml_ridge_pred_20d
+  10. ml_xgb_pred_5d
+
+PORTFOLIO OPTIMIZATION RESULTS
+----------------------------------------
+Optimal Portfolio Weights:
+    TSLA:  25.00% (Expected Return: 123.16%)
+     TLT:  25.00% (Expected Return: 104.78%)
+    ABBV:  25.00% (Expected Return: 110.90%)
+     QQQ:   2.00% (Expected Return: 100.41%)
+      BA:   1.00% (Expected Return: 97.01%)
+     JPM:   1.00% (Expected Return: 94.58%)
+      KO:   1.00% (Expected Return: 86.34%)
+     WFC:   1.00% (Expected Return: 62.75%)
+   GOOGL:   1.00% (Expected Return: 81.15%)
+     GLD:   1.00% (Expected Return: 79.50%)
+
+Portfolio Metrics:
+  Expected Return:  89.80%
+  Volatility:        7.49%
+  Sharpe Ratio:    11.5849
+  Effective Assets:   6.62
+  Max Weight:       25.00%
+
+BACKTESTING RESULTS
+----------------------------------------
+Total Return:      16.63%
+Annual Return:      5.96%
+Annual Volatility: 11.70%
+Sharpe Ratio:      0.5094
+Max Drawdown:     -10.62%
+Win Rate:          50.75%
+Number of Periods: 735
+
+RISK MODEL SUMMARY
+----------------------------------------
+Beta Estimates by Asset:
+    AAPL:  1.210
+    MSFT:  1.186
+   GOOGL:  1.165
+    AMZN:  1.067
+    TSLA:  1.725
+    NVDA:  1.743
+    META:  1.332
+     JPM:  1.228
+     BAC:  1.368
+     WFC:  1.379
+
+================================================================================

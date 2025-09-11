@@ -13,8 +13,10 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # Import our alpha and beta modules
-from .alpha_ml import AlphaFactorEvaluator, TechnicalAlphaFactors, FundamentalAlphaFactors
-from .beta_statistics import BetaEvaluator, TraditionalRiskModels, MultiFactorModels
+from .factor.alpha.alpha_factor_evaluator import AlphaFactorEvaluator
+from .factor.alpha.technical_alpha_factors import TechnicalAlphaFactors
+from .factor.alpha.fundamental_alpha_factors import FundamentalAlphaFactors
+
 
 
 class AlphaBetaOptimizer:
