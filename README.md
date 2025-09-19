@@ -41,7 +41,7 @@ Portfolio_Optimization_System/
 ```bash
 # Clone repository
 git clone https://github.com/kevinlmf/Portfolio_Optimization
-cd Portfolio_Optimization_System
+cd Portfolio_Optimization
 
 # Set up virtual environment
 python -m venv venv
