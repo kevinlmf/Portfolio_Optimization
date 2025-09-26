@@ -13,11 +13,13 @@ This system represents a complete end-to-end solution for quantitative portfolio
 ### 🎯 Key Features
 
 - **🧠 Intelligent Alpha Mining**: Automatically discovers and validates 100+ alpha factors across multiple categories
-- **⚖️ Advanced Risk Modeling**: 5+ beta estimation methods including Copula models and CVaR approaches  
+- **🌐 Macroeconomic Integration**: Advanced macro factors including yield curves, VIX, and economic indicators
+- **⚖️ Advanced Risk Modeling**: 5+ beta estimation methods including Copula models and CVaR approaches
 - **🎛️ Multi-Objective Optimization**: Sharpe maximization, minimum variance, risk parity, and utility optimization
 - **📊 Comprehensive Backtesting**: Rolling window optimization with performance analytics
-- **🔄 Production-Ready Architecture**: Modular, scalable design suitable for institutional use
+- **🔄 Production-Ready Architecture**: Clean, modular design optimized for performance
 - **📈 Real-Time Monitoring**: Factor validation and portfolio rebalancing capabilities
+- **🤖 Enhanced Alpha Combination**: Intelligent factor combining with regime-aware weighting
 
 ## 🏗️ Architecture
 
@@ -25,16 +27,20 @@ This system represents a complete end-to-end solution for quantitative portfolio
 Portfolio_Optimization_System/
 ├── 📊 data/                          # Data acquisition and processing
 │   ├── enhanced_data_fetcher.py      # Multi-source market data fetcher
+│   ├── macro_data_fetcher.py         # Macroeconomic data integration
 │   └── real_data.py                  # Real-time data integration
 ├── 🧠 strategy/                      # Core strategy engine
 │   ├── factor/                       # Factor research framework
 │   │   ├── alpha/                    # Alpha factor mining
 │   │   │   ├── technical_alpha_factors.py      # 40+ technical indicators
 │   │   │   ├── fundamental_alpha_factors.py    # 25+ fundamental factors
+│   │   │   ├── macroeconomic_alpha_factors.py  # NEW: Macro economic factors
 │   │   │   ├── ml_alpha_factors.py            # Machine learning factors
 │   │   │   ├── price_volume_alpha_factors.py   # Market microstructure
 │   │   │   ├── feature_engineering.py         # Advanced feature engineering
 │   │   │   ├── alpha_factor_evaluator.py      # Statistical validation
+│   │   │   ├── alpha_combiner.py              # NEW: Smart factor combination
+│   │   │   ├── enhanced_alpha_miner.py        # NEW: Enhanced mining engine
 │   │   │   └── real_alpha_miner.py            # Production alpha mining
 │   │   └── beta/                     # Risk factor modeling
 │   │       ├── traditional_risk_models.py      # CAPM & Fama-French
@@ -50,8 +56,9 @@ Portfolio_Optimization_System/
 │   └── portfolio_optimization_env.py # Trading environment integration
 ├── 📜 scripts/                       # Main execution scripts
 │   ├── smart_portfolio_optimizer.py  # 🎯 PRIMARY ENTRY POINT
-│   └── start_here.py                 # Alternative comprehensive interface
+│   └── start_here.py                 # Advanced comprehensive interface
 └── 📁 results/                       # Output and analytics
+    └── smart_optimizer/              # Smart optimizer results
 ```
 
 ## 🚀 Quick Start
@@ -69,7 +76,18 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Optional: Set up FRED API key for enhanced macro data
+export FRED_API_KEY="your_fred_api_key_here"
 ```
+
+### System Requirements
+
+- **Python**: 3.8+ (recommended: 3.9+)
+- **Memory**: 4GB+ RAM recommended
+- **Storage**: 500MB for data and results
+- **Network**: Internet connection for data fetching
+- **Optional**: FRED API key for comprehensive macroeconomic data
 
 ### 🎯 Option 1: Smart Portfolio Optimizer (Recommended)
 
@@ -106,16 +124,17 @@ python scripts/start_here.py --mode full --tickers AAPL,MSFT,GOOGL,AMZN --save
 
 ### Alpha Factor Mining
 
-Our system discovers alpha signals across **6 major categories**:
+Our system discovers alpha signals across **7 major categories**:
 
 | Category | Description | Factors | Examples |
 |----------|-------------|---------|----------|
 | **Technical** | Price-based signals | 40+ | RSI, MACD, Bollinger Bands, Momentum |
 | **Fundamental** | Financial metrics | 25+ | P/E, P/B, ROE, Debt ratios |
+| **Macroeconomic** | 🆕 Economic indicators | 20+ | Treasury yields, VIX, DXY, Credit spreads |
 | **Machine Learning** | ML-predicted signals | 15+ | Random Forest, XGBoost predictions |
 | **Microstructure** | Order flow analysis | 18+ | Bid-ask spread, volume imbalance |
 | **Cross-Sectional** | Relative rankings | 12+ | Sector rotation, size factors |
-| **Alternative** | Market sentiment | 10+ | VIX signals, options flow |
+| **Alternative** | Market sentiment | 10+ | Options flow, sentiment indices |
 
 ### Risk Modeling Framework
 
@@ -189,6 +208,35 @@ optimizer.backtest_strategy(rebalance_frequency='monthly')
 # Generate comprehensive report
 report = optimizer.generate_report(save_plots=True)
 ```
+
+## 🆕 Latest Enhancements
+
+### Macroeconomic Factor Integration
+
+The system now includes comprehensive macroeconomic factor analysis:
+
+- **🌐 Multi-Source Data**: Treasury yields, VIX, DXY, commodity prices
+- **📊 Economic Indicators**: GDP, inflation, employment data integration
+- **⚡ Real-Time Updates**: Automatic data refresh and factor recalculation
+- **🧠 Regime Awareness**: Market regime detection for dynamic factor weighting
+
+### Enhanced Alpha Combination
+
+New intelligent factor combination framework:
+
+- **🔀 Multiple Combination Methods**: Equal weight, IC-weighted, risk parity, regime-aware
+- **📈 Dynamic Weighting**: Automatic adjustment based on market conditions
+- **🎯 Factor Alignment**: Handles different data frequencies seamlessly
+- **✅ Validation Pipeline**: Comprehensive factor performance monitoring
+
+### System Optimizations
+
+Recent performance and architecture improvements:
+
+- **🚀 Faster Processing**: Optimized data pipelines and factor calculations
+- **🧹 Clean Architecture**: Removed duplicated code and improved modularity
+- **📊 Enhanced Reporting**: Comprehensive analysis reports with visualizations
+- **🔧 Better Error Handling**: Robust error management and recovery
 
 ## 📈 Validation & Risk Management
 
@@ -275,6 +323,9 @@ defensive_mix = ['SPY', 'TLT', 'GLD', 'VIX', 'UUP']  # Stocks, bonds, gold, vola
 Run the test suite:
 
 ```bash
+# System health check
+python scripts/start_here.py --mode health
+
 # Basic system test
 python -c "
 from scripts.smart_portfolio_optimizer import SmartPortfolioOptimizer
@@ -285,4 +336,48 @@ print('✅ System initialized successfully')
 # Full integration test with sample data
 python scripts/smart_portfolio_optimizer.py
 ```
+
+## 📋 Changelog
+
+### Version 2.1 (Latest) - September 2024
+
+**🆕 New Features:**
+- Macroeconomic factor integration (`macro_data_fetcher.py`, `macroeconomic_alpha_factors.py`)
+- Enhanced alpha combination system (`alpha_combiner.py`, `enhanced_alpha_miner.py`)
+- Advanced system interface with health checks (`start_here.py` enhanced)
+- Regime-aware dynamic factor weighting
+
+**🔧 Improvements:**
+- Cleaned and optimized project structure (removed duplicate files)
+- Enhanced error handling and logging
+- Improved factor validation pipeline
+- Better documentation and examples
+
+**🐛 Bug Fixes:**
+- Resolved data alignment issues across different frequencies
+- Fixed memory optimization in factor calculations
+- Improved stability of backtesting engine
+
+### Version 2.0 - August 2024
+- Complete system refactor
+- Production-ready architecture
+- Advanced risk modeling capabilities
+
+### Version 1.0 - Initial Release
+- Basic portfolio optimization
+- Technical and fundamental factors
+- Simple backtesting framework
+
+## 📞 Support
+
+For questions, issues, or contributions:
+
+1. **Documentation**: Check the comprehensive README and inline code documentation
+2. **System Health**: Run `python scripts/start_here.py --mode health` for diagnostics
+3. **Issues**: Report bugs or request features via the issue tracker
+4. **Performance**: Monitor system performance using the built-in reporting tools
+
+---
+
+**Built with ❤️ for quantitative finance professionals**
 

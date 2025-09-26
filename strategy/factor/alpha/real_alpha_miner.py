@@ -98,9 +98,10 @@ class RealAlphaMiner:
         crosssec = _normalize_dates(self._mine_cross_sectional_factors())
         ml = _normalize_dates(self._mine_ml_factors())
         alt = _normalize_dates(self._mine_alternative_factors())
+        macro = _normalize_dates(self._mine_macro_factors())
 
         # Safe horizontal concat; some may be empty
-        parts = [df for df in [technical, fundamental, micro, crosssec, ml, alt] if df is not None and not df.empty]
+        parts = [df for df in [technical, fundamental, micro, crosssec, ml, alt, macro] if df is not None and not df.empty]
         if not parts:
             raise ValueError("No factors produced — check input data.")
 
@@ -443,6 +444,85 @@ class RealAlphaMiner:
         df = pd.concat(factors_list, ignore_index=True)
         logger.info(f"Alternative factors created: {df.shape}")
         return _normalize_dates(df)
+
+    def _mine_macro_factors(self) -> pd.DataFrame:
+        """Mine macroeconomic alpha factors."""
+        logger.info("Mining macroeconomic factors...")
+
+        try:
+            # Import macroeconomic modules
+            import sys
+            import os
+            ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+            sys.path.append(ROOT_DIR)
+
+            from strategy.factor.alpha.macroeconomic_alpha_factors import MacroeconomicAlphaFactors
+            from data.macro_data_fetcher import MacroDataFetcher
+
+            # Get unique tickers from data
+            tickers = self.data['ticker'].unique().tolist()
+
+            # Initialize macroeconomic factor calculator
+            macro_factors = MacroeconomicAlphaFactors(tickers, period="2y")
+
+            # Calculate macroeconomic factors
+            macro_df = macro_factors.calculate_all_factors()
+
+            if macro_df.empty:
+                logger.warning("No macroeconomic factors generated")
+                return pd.DataFrame()
+
+            # Create composite factors
+            macro_df = macro_factors.create_composite_macro_factors(macro_df)
+
+            # Align with stock data dates
+            macro_aligned = []
+
+            for ticker in tickers:
+                ticker_stock_data = self.data[self.data['ticker'] == ticker].copy()
+                ticker_macro_data = macro_df[macro_df['tic'] == ticker]
+
+                if ticker_macro_data.empty:
+                    continue
+
+                # Get the latest macro data for this ticker
+                latest_macro = ticker_macro_data.iloc[-1]
+
+                # Create factor dataframe aligned with stock dates
+                factor_df = pd.DataFrame()
+                factor_df['ticker'] = ticker
+                factor_df['date'] = ticker_stock_data['date']
+
+                # Add macro factors (broadcast latest values across all dates)
+                macro_factor_cols = [col for col in latest_macro.index
+                                   if col not in ['date', 'tic']]
+
+                for col in macro_factor_cols:
+                    if pd.notna(latest_macro[col]):
+                        factor_df[f'macro_{col}'] = latest_macro[col]
+
+                if len(factor_df) > 0:
+                    macro_aligned.append(factor_df)
+
+            if not macro_aligned:
+                logger.warning("No aligned macroeconomic factors created")
+                return pd.DataFrame()
+
+            result_df = pd.concat(macro_aligned, ignore_index=True)
+            result_df = _normalize_dates(result_df)
+
+            logger.info(f"Macroeconomic factors created: {result_df.shape}")
+            logger.info(f"Macro factor columns: {len([c for c in result_df.columns if c.startswith('macro_')])}")
+
+            return result_df
+
+        except Exception as e:
+            logger.warning(f"Macroeconomic factor mining failed: {e}")
+            # Return empty dataframe with correct structure
+            empty_df = pd.DataFrame()
+            empty_df['ticker'] = self.data['ticker']
+            empty_df['date'] = self.data['date']
+            return _normalize_dates(empty_df)
 
     # ------------------ validation & helpers ------------------- #
 

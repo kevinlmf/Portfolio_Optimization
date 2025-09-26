@@ -47,6 +47,7 @@ logger = logging.getLogger(__name__)
 try:
     from data.enhanced_data_fetcher import EnhancedDataFetcher
     from strategy.factor.alpha.real_alpha_miner import RealAlphaMiner
+    from strategy.factor.alpha.enhanced_alpha_miner import EnhancedAlphaMiner
     from strategy.factor.beta.real_beta_estimator import RealBetaEstimator
     from risk_control.factor_validation import FactorValidator
 except ImportError as e:
@@ -62,23 +63,29 @@ class SmartPortfolioOptimizer:
     4. Provides comprehensive analysis and backtesting
     """
     
-    def __init__(self, 
+    def __init__(self,
                  start_date: str = "2020-01-01",
                  end_date: str = None,
                  risk_free_rate: float = 0.02,
-                 results_dir: str = None):
+                 results_dir: str = None,
+                 use_enhanced_miner: bool = True,
+                 alpha_combination_method: str = 'dynamic_regime'):
         """
         Initialize the Smart Portfolio Optimizer.
-        
+
         Args:
             start_date: Start date for data collection
             end_date: End date for data collection (default: today)
             risk_free_rate: Annual risk-free rate
             results_dir: Directory to save results
+            use_enhanced_miner: Whether to use enhanced alpha miner with tech-macro separation
+            alpha_combination_method: Method to combine technical and macro alphas
         """
         self.start_date = start_date
         self.end_date = end_date or datetime.now().strftime("%Y-%m-%d")
         self.risk_free_rate = risk_free_rate
+        self.use_enhanced_miner = use_enhanced_miner
+        self.alpha_combination_method = alpha_combination_method
         
         # Setup results directory
         self.results_dir = results_dir or os.path.join(ROOT_DIR, "results", "smart_optimizer")
@@ -191,25 +198,59 @@ class SmartPortfolioOptimizer:
             raise ValueError("Market data not available. Call fetch_market_data() first.")
         
         try:
-            # Use real alpha miner if available
-            self.alpha_miner = RealAlphaMiner(
-                data=self.market_data,
-                min_ic_threshold=min_ic_threshold
-            )
-            self.alpha_factors = self.alpha_miner.mine_all_alpha_factors()
-            
-            # Get factor performance metrics
-            factor_performance = self.alpha_miner.factor_performance
-            if isinstance(factor_performance, pd.DataFrame) and not factor_performance.empty:
-                # Select top factors based on IC
-                top_factors = factor_performance.sort_values(
-                    'ic_1d', key=abs, ascending=False
-                ).head(top_n_factors)
-                self.selected_factors = top_factors['factor'].tolist()
-                
-                logger.info(f"Top {len(self.selected_factors)} alpha factors selected:")
-                for i, (_, row) in enumerate(top_factors.head(10).iterrows(), 1):
-                    logger.info(f"  {i}. {row['factor']}: IC={row.get('ic_1d', 0):.4f}")
+            if self.use_enhanced_miner:
+                # Use enhanced alpha miner with tech-macro separation
+                logger.info("Using Enhanced Alpha Miner with tech-macro separation...")
+                self.alpha_miner = EnhancedAlphaMiner(
+                    data=self.market_data,
+                    min_ic_threshold=min_ic_threshold,
+                    combination_method=self.alpha_combination_method
+                )
+                self.alpha_factors = self.alpha_miner.mine_all_alpha_factors(separate_analysis=True)
+
+                # Get comprehensive factor summary
+                factor_summary = self.alpha_miner.get_factor_summary()
+                logger.info(f"Technical factors: {factor_summary['technical_factors']['factors']}")
+                logger.info(f"Macro factors: {factor_summary['macro_factors']['factors']}")
+                logger.info(f"Combination method: {factor_summary['combined_factors']['method']}")
+
+                # Get top performers by category
+                if factor_summary['top_performers']:
+                    logger.info("Top alpha performers by category:")
+                    for category, performers in factor_summary['top_performers'].items():
+                        if performers:
+                            logger.info(f"  {category.capitalize()}:")
+                            for i, factor in enumerate(performers[:5], 1):
+                                logger.info(f"    {i}. {factor['factor']}: IC={factor['ic']:.4f}")
+
+                # Set selected factors (combined factors)
+                if not self.alpha_factors.empty:
+                    combined_cols = [c for c in self.alpha_factors.columns
+                                   if 'alpha' in c and c not in ['date', 'ticker']]
+                    self.selected_factors = combined_cols
+                    logger.info(f"Selected combined alpha factors: {len(self.selected_factors)}")
+
+            else:
+                # Use traditional real alpha miner
+                logger.info("Using traditional Alpha Miner...")
+                self.alpha_miner = RealAlphaMiner(
+                    data=self.market_data,
+                    min_ic_threshold=min_ic_threshold
+                )
+                self.alpha_factors = self.alpha_miner.mine_all_alpha_factors()
+
+                # Get factor performance metrics
+                factor_performance = self.alpha_miner.factor_performance
+                if isinstance(factor_performance, pd.DataFrame) and not factor_performance.empty:
+                    # Select top factors based on IC
+                    top_factors = factor_performance.sort_values(
+                        'ic_1d', key=abs, ascending=False
+                    ).head(top_n_factors)
+                    self.selected_factors = top_factors['factor'].tolist()
+
+                    logger.info(f"Top {len(self.selected_factors)} alpha factors selected:")
+                    for i, (_, row) in enumerate(top_factors.head(10).iterrows(), 1):
+                        logger.info(f"  {i}. {row['factor']}: IC={row.get('ic_1d', 0):.4f}")
             
         except Exception as e:
             logger.warning(f"Alpha miner failed: {e}")
